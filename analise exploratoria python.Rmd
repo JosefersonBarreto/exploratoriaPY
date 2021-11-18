@@ -12,7 +12,8 @@ output:
 
 
 # Objetivo
-Realizar uma análise exploratória affim de responder algumas questões , para estem fim usaremos os dados  públicos disponíveis no  IMDB sobre as avaliações dos filmes . 
+
+Realizar uma análise exploratória afim de responder algumas questões , para estem fim usaremos os dados  públicos disponíveis no  IMDB sobre as avaliações dos filmes . 
 
 <font color='#e6103e' > As principais pergutas que buscaremos respostas: </font> 
 
@@ -133,7 +134,7 @@ tabelas.head()
 ```
 
 
-## Covertendo  o nosso DataFrame em lista 
+## Convertendo  o nosso DataFrame em lista 
 
 O comando "**values.tolist()**"  é responsável pela conversão  de DataFrame para lista.
 ```{python}

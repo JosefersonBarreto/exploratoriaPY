@@ -1,0 +1,192 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+
+
+library(readxl)
+
+dados<-read_excel("C:/Users/josef/Documents/PowerBI/DadosVendaCarros.xlsx")
+
+str(dados)
+
+
+library(dplyr)
+
+
+```
+
+row {data-width=400}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+ library(ggplot2)
+library(plotly)
+
+options(scipen = 999)
+azul.theme<-theme(plot.background = element_rect(fill = '#13173C'),
+      
+      plot.title=element_text(colour='#f2f2f2',
+      hjust=.5,face='italic'),
+   plot.subtitle=element_text(colour =  '#f2f2f2',
+                           hjust=.5,face='italic'),
+      
+   axis.text=element_text(colour = 'gray80'),
+   panel.background =element_rect(fill = '#13173C'),
+   panel.grid.major.x = element_blank(),
+   panel.grid.minor.x = element_blank(),
+   panel.grid.minor.y = element_blank(),
+   panel.grid.major.y = element_line(size = .1),
+   axis.ticks.x.bottom = element_blank(),
+   axis.ticks.x = element_blank(),
+   axis.title = element_text(colour ='gray80')
+   )
+
+
+cor<-seq(1:457)
+
+p<-ggplot(data=dados, aes(dados$Ano,dados$ValorVenda)) + 
+    labs(title = "vendas por ano ", x="Ano",y= "frequencia")+
+    azul.theme +geom_bar(stat='identity',fill="purple",colour = "purple")+theme(plot.title = element_text(hjust = 0.5))+geom_line(aes(x=Ano, y=ValorVenda), stat = 'identity')
+
+
+
+
+
+######## media por grupo 
+
+
+
+
+
+
+#library(esquisse)
+
+#esquisser(dados)
+
+
+
+library(ggplot2)
+
+#p<-ggplot(dados) +
+# aes(x = Ano, weight = ValorVenda) +
+# geom_bar(fill = "#7B66B7") +
+# labs(title = "vendas por ano") +
+ #azul.theme +geom_line(aes(x=Ano, y=ValorVenda), stat = 'identity')
+
+
+ggplotly(p)
+
+```
+
+row {data-width=350 }
+-----------------------------------------------------------------------
+
+### Chart  B
+
+
+
+```{r}
+
+
+
+
+#ggplot(dados) + geom_bar(aes(x = factor(1), fill = browser),width = 1) +
+#coord_polar(theta="y")
+
+
+library(esquisse)
+
+
+#ggplot(dados, aes(x=dados$Fabricante, y=dados$CustoEntrega, fill=dados$Fabricante)) +
+ # geom_bar(stat="identity", width=1) +
+ #coord_polar("y", start=0) +azul.theme
+  
+  
+  
+  
+ 
+
+
+#salvar as cores 
+cores<-c('#5875D5','#5875D5')
+
+df <- dados
+df <- df %>% group_by(Fabricante)
+df <- df %>% summarize(count = n())
+fig <- df %>% plot_ly(labels = ~Fabricante, values = ~count)
+fig <- fig %>% add_pie(hole = 0.6)
+fig <- fig %>%    #layout(title = "custo de entraga por fabricante ",  showlegend = F,
+                     # xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+                     # yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))%>%
+    layout(title = "custo de entraga por fabricante ",  showlegend = F,color='#ffffff',
+         paper_bgcolor='#13173C',plot_bgcolor='#ffffff',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE,
+           color = '#ffffff',
+           yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE,
+            color = '#ffffff', tickangle = -45))
+           
+       )
+fig
+
+  
+  
+
+
+```
+
+
+
+
+
+
+### Chart C
+
+```{r}
+renderValueBox({
+   
+     
+  
+   v<-sum(dados$ValorVenda)
+ 
+   
+   k<-signif(31697940,digits = 2)
+   
+   
+    valueBox(paste("vendas" , "31,7"  , "MI"),
+            icon = icon('import', lib = 'glyphicon'), #icon("sign-out"),
+            color = "#13173C")
+   
+         
+
+})
+  
+  
+  
+```
+
+
+
+
+row {data-width=250 }
+-----------------------------------------------------------------------
+
+
+### Chart D
+
+```{r}
+
+  
+  
+  
+```
+
